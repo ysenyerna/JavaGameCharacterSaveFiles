@@ -49,11 +49,56 @@ public class Main {
 		// Write JSON to file
 		try {
 			Files.writeString(Path.of(jsonFile), json.toString());
+			System.out.println("characters.json created successfully.");
 		}
 		catch (IOException e) {
 			System.err.println("Error writing to JSON file: " + e.getMessage());
 		}
 
+		// Build XML
+		StringBuilder xml = new StringBuilder("<characters>\n");
+		for (int i = 0; i < characters.size(); i++) {
+			GameCharacter character = characters.get(i);
+			xml.append("  <character>\n");
+			xml.append("    <name>" + character.getCharacterName() + "</name>\n");
+			xml.append("    <class>" + character.getCharacterClass() + "</class>\n");
+			xml.append("    <level>" + character.getLevel() + "</level>\n");
+			xml.append("    <health>" + character.getHealth() + "</health>\n");
+			xml.append("    <attackPower>" + character.getAttackPower() + "</attackPower>\n");
+			xml.append("    <gold>" + character.getGold() + "</gold>\n");
+			xml.append("  </character>\n");
+		}
+		xml.append("</characters>");
+
+		// Write XML to file
+		try {
+			Files.writeString(Path.of(xmlFile), xml.toString());
+			System.out.println("characters.xml created successfully.");
+		}
+		catch (IOException e) {
+			System.err.println("Error writing to XML file: " + e.getMessage());
+		}
+
+
+		// Read and display the data from the JSON file
+		System.out.println("\nReading JSON file: ");
+		try {
+			String jsonContent = Files.readString(Path.of(jsonFile));
+			System.out.println(jsonContent);
+		}
+		catch (IOException e) {
+			System.err.println("Error reading JSON file: " + e.getMessage());
+		}
+
+		// Read and display the data from the XML file
+		System.out.println("\nReading XML file: ");
+		try {
+			String xmlContent = Files.readString(Path.of(xmlFile));
+			System.out.println(xmlContent);
+		}
+		catch (IOException e) {
+			System.err.println("Error reading XML file: " + e.getMessage());
+		}
 
 	}
 
